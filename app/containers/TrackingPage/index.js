@@ -371,6 +371,7 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
             }}
             minZoom={13}
             onZoomEnd={(map) => (this.zoomChanged(map.getZoom()))}
+            center={[-0.134579, 51.510080]}
           >
             <Cluster ClusterMarkerFactory={clusterMarker} clusterThreshold={8} radius={30} >
               {
