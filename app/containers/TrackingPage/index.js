@@ -286,16 +286,16 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
       },
     };
     const openSecondary = true;
-    let drawerWidth = '266';
+    let drawerWidth = '20%';
     if (isMobile.any()) {
-      drawerWidth = '100vw';
+      drawerWidth = '100%';
     }
 
     const { vehicles, vehicle_state } = this.props.TrackingPage;
     const mPath = this.getMovingPath(this.state.vehicle_id);
     const sPath = this.getScheduledPath(this.state.vehicle_id);
     const pathList = sPath.checkpointInfo.map((item) => (
-      <div style={styles.ckpWrapper}>
+      <div style={styles.ckpWrapper} key={item.id}>
         <div style={styles.time}>
           {item.actualTime}
         </div>
@@ -413,7 +413,7 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
             open={this.state.pop_open}
             anchorEl={this.state.anchorEl}
             anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-            targetOrigin={{ horizontal: 'center', vertical: 'top' }}
+            targetOrigin={{ horizontal: 'middle', vertical: 'top' }}
             onRequestClose={this.handleRequestClose}
           >
             <div style={styles.popHeader}>

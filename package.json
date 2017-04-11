@@ -161,7 +161,8 @@
       "express",
       "ip",
       "minimist",
-      "sanitize.css"
+      "sanitize.css",
+      "react-material-icons"
     ],
     "include": [
       "core-js",
