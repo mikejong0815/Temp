@@ -16,6 +16,8 @@ import { applyRouterMiddleware, Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import FontFaceObserver from 'fontfaceobserver';
 import { useScroll } from 'react-router-scroll';
+// Inject required Material UI theme
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import 'sanitize.css/sanitize.css';
 
 // Import root app
@@ -32,6 +34,7 @@ import LanguageProvider from 'containers/LanguageProvider';
 import '!file-loader?name=[name].[ext]!./favicon.ico';
 import '!file-loader?name=[name].[ext]!./manifest.json';
 import 'file-loader?name=[name].[ext]!./.htaccess'; // eslint-disable-line import/extensions
+import 'roboto-npm-webfont/style.css';
 /* eslint-enable import/no-webpack-loader-syntax */
 
 import configureStore from './store';
@@ -48,6 +51,10 @@ import createRoutes from './routes';
 // Observe loading of Open Sans (to remove open sans, remove the <link> tag in
 // the index.html file and this observer)
 const openSansObserver = new FontFaceObserver('Open Sans', {});
+
+// Inject Material UI touch, tap, and click events
+const injectTapEventPlugin = require('react-tap-event-plugin');
+injectTapEventPlugin();
 
 // When Open Sans is loaded, add a font-family using Open Sans to the body
 openSansObserver.load().then(() => {
@@ -78,19 +85,22 @@ const rootRoute = {
 
 const render = (messages) => {
   ReactDOM.render(
-    <Provider store={store}>
-      <LanguageProvider messages={messages}>
-        <Router
-          history={history}
-          routes={rootRoute}
-          render={
-            // Scroll to top when going to a new page, imitating default browser
-            // behaviour
-            applyRouterMiddleware(useScroll())
-          }
-        />
-      </LanguageProvider>
-    </Provider>,
+    <MuiThemeProvider>
+      <Provider store={store}>
+        <LanguageProvider messages={messages}>
+          <Router
+            history={history}
+            routes={rootRoute}
+            render={
+              // Scroll to top when going to a new page, imitating default browser
+              // behaviour
+              applyRouterMiddleware(useScroll())
+            }
+          />
+        </LanguageProvider>
+      </Provider>
+    </MuiThemeProvider>
+    ,
     document.getElementById('app')
   );
 };

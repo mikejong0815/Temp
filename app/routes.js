@@ -47,6 +47,90 @@ export default function createRoutes(store) {
           .catch(errorLoading);
       },
     }, {
+      path: '/login',
+      name: 'login',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          import('containers/LoginPage/reducer'),
+          import('containers/LoginPage/sagas'),
+          import('containers/LoginPage'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('loginPage', reducer.default);
+          injectSagas(sagas.default);
+
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
+      path: '/signup',
+      name: 'signup',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          import('containers/SignupPage/reducer'),
+          import('containers/SignupPage/sagas'),
+          import('containers/SignupPage'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('signupPage', reducer.default);
+          injectSagas(sagas.default);
+
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
+      path: '/restorepassword',
+      name: 'restorepassword',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          import('containers/PasswordRestorePage/reducer'),
+          import('containers/PasswordRestorePage/sagas'),
+          import('containers/PasswordRestorePage'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('passwordRestorePage', reducer.default);
+          injectSagas(sagas.default);
+
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
+      path: '/trackingpage',
+      name: 'trackingpage',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          import('containers/TrackingPage/reducer'),
+          import('containers/TrackingPage/sagas'),
+          import('containers/TrackingPage'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('trackingPage', reducer.default);
+          injectSagas(sagas.default);
+
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {
