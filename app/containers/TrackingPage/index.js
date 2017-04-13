@@ -89,6 +89,7 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
           height: '0vh',
           marginTop: 'auto',
         },
+        mapCenter: this.props.TrackingPage.vehicles[0].coordinates,
       };
     } else {
       this.state = {
@@ -114,6 +115,7 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
           backgroundColor: '#212121',
         },
         drawerStyle: {},
+        mapCenter: this.props.TrackingPage.vehicles[0].coordinates,
       };
     }
   }
@@ -371,7 +373,7 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
             }}
             minZoom={13}
             onZoomEnd={(map) => (this.zoomChanged(map.getZoom()))}
-            center={[-0.134579, 51.510080]}
+            center={this.state.mapCenter}
           >
             <Cluster ClusterMarkerFactory={clusterMarker} clusterThreshold={8} radius={30} >
               {
@@ -394,6 +396,7 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
                           time: vehicle.ckPassTime,
                         },
                         anchorEl: event.currentTarget,
+                        mapCenter: vehicle.coordinates,
                       }))}
                     >
                       V
