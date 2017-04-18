@@ -410,9 +410,7 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
                           mapCenter: vehicle.coordinates,
                         });
                         if (this.state.menuOpen) {
-                          if (!isMobile.any()) {
-                            this.switchMenuToggle();
-                          } else {
+                          if (isMobile.any()) {
                             this.switchMobileMenuToggle();
                           }
                         }
