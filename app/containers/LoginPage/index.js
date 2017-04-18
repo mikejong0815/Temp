@@ -49,7 +49,7 @@ export class LoginPage extends React.Component { // eslint-disable-line react/pr
               style={textBoxStyles}
             />
             <div style={loginLinkContainerStyles}>
-              <A onClick={() => { browserHistory.push('/restorepassword'); }}>Forgot Password</A>
+              <A a onClick={() => { browserHistory.push('/restorepassword'); }}>Forgot Password</A>
             </div>
             <div style={loginLinkContainerStyles}>
               <A onClick={() => { browserHistory.push('/signup'); }}>Sign up new account</A>

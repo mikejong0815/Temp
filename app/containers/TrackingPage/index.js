@@ -8,7 +8,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
-import ReactMapboxGl, { Layer, Feature, Marker, Cluster } from 'react-mapbox-gl';
+import ReactMapboxGl, { Layer, Feature, Marker, Cluster, ZoomControl } from 'react-mapbox-gl';
 import IconButton from 'material-ui/IconButton';
 import Drawer from 'material-ui/Drawer';
 import Popover from 'material-ui/Popover';
@@ -99,7 +99,7 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
         checkpoint: {},
         drawerOpen: false,
         zoomLevel: 0,
-        menuOpen: true,
+        menuOpen: false,
         menuStyles: {
           position: 'absolute',
           height: '100%',
@@ -121,21 +121,22 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
   }
   getMovingPath = (vId) => {
     const { movingPath } = this.props.TrackingPage;
+    const path = [[], [], []];
     for (let i = 0; i < movingPath.length; i += 1) {
       if (movingPath[i].id === vId) {
-        return movingPath[i];
+        return { path: movingPath[i].path };
       }
     }
-    return { path: [[], [], []] };
+    return { path };
   };
   getScheduledPath = (vId) => {
-    const { scheduledPath } = this.props.TrackingPage;
-    for (let i = 0; i < scheduledPath.length; i += 1) {
-      if (scheduledPath[i].id === vId) {
-        return scheduledPath[i];
+    const { movingPath } = this.props.TrackingPage;
+    for (let i = 0; i < movingPath.length; i += 1) {
+      if (movingPath[i].id === vId) {
+        return { path: movingPath[i].path };
       }
     }
-    return { path: [], checkpointInfo: [] };
+    return { path: [] };
   };
   zoomChanged = (zoom) => {
     let zoomLevel = 0;
@@ -154,9 +155,9 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
     });
   };
   switchMenuToggle = () => {
-    this.setState({ menuOpen: !this.state.menuOpen });
-    if (this.state.menuOpen) {
+    if (!this.state.menuOpen) {
       this.setState({
+        menuOpen: true,
         menuStyles: {
           position: 'absolute',
           height: '100%',
@@ -174,6 +175,7 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
       });
     } else {
       this.setState({
+        menuOpen: false,
         menuStyles: {
           position: 'absolute',
           height: '100%',
@@ -193,9 +195,9 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
     }
   };
   switchMobileMenuToggle = () => {
-    this.setState({ menuOpen: !this.state.menuOpen });
-    if (this.state.menuOpen) {
+    if (!this.state.menuOpen) {
       this.setState({
+        menuOpen: true,
         menuStyles: {
           position: 'absolute',
           height: '100%',
@@ -206,6 +208,7 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
       });
     } else {
       this.setState({
+        menuOpen: false,
         menuStyles: {
           position: 'absolute',
           height: '100%',
@@ -295,18 +298,24 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
 
     const { vehicles, vehicle_state } = this.props.TrackingPage;
     const mPath = this.getMovingPath(this.state.vehicle_id);
-    const sPath = this.getScheduledPath(this.state.vehicle_id);
-    const pathList = sPath.checkpointInfo.map((item) => (
-      <div style={styles.ckpWrapper} key={item.id}>
-        <div style={styles.time}>
-          {item.actualTime}
+    let mPathPoints = [];
+    let sPath = [];
+    let pathList;
+    if (mPath.path[this.state.zoomLevel].length > 0) {
+      mPathPoints = mPath.path[this.state.zoomLevel].map((item) => (item.coords));
+      sPath = mPath.path[this.state.zoomLevel];
+      pathList = sPath.map((item) => (
+        <div style={styles.ckpWrapper} key={item.id}>
+          <div style={styles.time}>
+            {item.pathTime} {item.estimationTime}
+          </div>
+          <div style={styles.description}>
+            <div>{item.name}</div>
+            <div>{item.description}</div>
+          </div>
         </div>
-        <div style={styles.description}>
-          <div>{item.name}</div>
-          <div>{item.description}</div>
-        </div>
-      </div>
-    ));
+      ));
+    }
     let drawerStyle = {};
     if (isMobile.any()) {
       drawerStyle = {
@@ -375,6 +384,7 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
             onZoomEnd={(map) => (this.zoomChanged(map.getZoom()))}
             center={this.state.mapCenter}
           >
+            <ZoomControl style={{ top: 90, left: 10, right: 'auto' }} />
             <Cluster ClusterMarkerFactory={clusterMarker} clusterThreshold={8} radius={30} >
               {
                 vehicles.map((vehicle, key) => {
@@ -385,19 +395,28 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
                       key={key}
                       style={markerStyles}
                       coordinates={vehicle.coordinates}
-                      onClick={(event) => (this.setState({
-                        pop_open: true,
-                        drawerOpen: false,
-                        vehicle_id: vehicle.id,
-                        type: vehicle.type,
-                        checkpoint: {
-                          name: vehicle.ckName,
-                          description: vehicle.ckDescription,
-                          time: vehicle.ckPassTime,
-                        },
-                        anchorEl: event.currentTarget,
-                        mapCenter: vehicle.coordinates,
-                      }))}
+                      onClick={(event) => {
+                        this.setState({
+                          pop_open: true,
+                          drawerOpen: false,
+                          vehicle_id: vehicle.id,
+                          type: vehicle.type,
+                          checkpoint: {
+                            name: vehicle.ckName,
+                            description: vehicle.ckDescription,
+                            time: vehicle.ckPassTime,
+                          },
+                          anchorEl: event.currentTarget,
+                          mapCenter: vehicle.coordinates,
+                        });
+                        if (this.state.menuOpen) {
+                          if (!isMobile.any()) {
+                            this.switchMenuToggle();
+                          } else {
+                            this.switchMobileMenuToggle();
+                          }
+                        }
+                      }}
                     >
                       V
                     </Marker>
@@ -410,7 +429,7 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
               layout={{ 'line-cap': 'round', 'line-join': 'round' }}
               paint={{ 'line-color': '#4790E5', 'line-width': 12 }}
             >
-              { this.state.drawerOpen ? (<Feature coordinates={mPath.path[this.state.zoomLevel]} />) : null}
+              { this.state.drawerOpen ? (<Feature coordinates={mPathPoints} />) : null}
             </Layer>
           </ReactMapboxGl>
           <Popover
