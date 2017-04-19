@@ -209,9 +209,9 @@ export class UserProfilePage extends React.Component { // eslint-disable-line re
         width: '100%',
       },
       profileImageStyles: {
-        width: '100',
-        height: '100',
-        borderRadius: '50',
+        width: 100,
+        height: 100,
+        borderRadius: 50,
         backgroundImage: 'url(https://d3pl14o4ufnhvd.cloudfront.net/v2/uploads/22367d53-e86d-414d-939a-4667b9839ace/127d0ceb39c72b9382bc5638735d55eec41f3c2a_original.png)',
         backgroundColor: 'rgb(224, 224, 224)',
         backgroundRepeat: 'none',
