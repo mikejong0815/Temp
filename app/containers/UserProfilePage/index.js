@@ -275,26 +275,26 @@ export class UserProfilePage extends React.Component { // eslint-disable-line re
                   <div style={styles.profileImageStyles}>
                   </div>
                 </div>
-                <div>
+                <div style={{ textAlign: 'center' }}>
                   <TextField
                     hintText="Full name"
                     floatingLabelText="Full name"
                   />
                 </div>
-                <div>
+                <div style={{ textAlign: 'center' }}>
                   <TextField
                     hintText="Email"
                     floatingLabelText="Email"
                   />
                 </div>
-                <div>
+                <div style={{ textAlign: 'center' }}>
                   <TextField
                     hintText="Password"
                     floatingLabelText="Password"
                   />
                 </div>
-                <div>
-                  <SelectField value={1} floatingLabelText="Language">
+                <div style={{ textAlign: 'center' }}>
+                  <SelectField value={1} floatingLabelText="Language" style={{ textAlign: 'left' }}>
                     <MenuItem value={1} primaryText="English" />
                     <MenuItem value={2} primaryText="French" />
                     <MenuItem value={3} primaryText="German" />
