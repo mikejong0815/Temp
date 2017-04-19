@@ -56,7 +56,7 @@ export class UserProfilePage extends React.Component { // eslint-disable-line re
       this.state = {
         menuOpen: false,
         menuStyles: {
-          position: 'absolute',
+          position: 'fixed',
           height: '100%',
           zIndex: 1300,
           overflow: 'hidden',
@@ -83,7 +83,7 @@ export class UserProfilePage extends React.Component { // eslint-disable-line re
       this.state = {
         menuOpen: false,
         menuStyles: {
-          position: 'absolute',
+          position: 'fixed',
           height: '100%',
           zIndex: 1300,
           overflow: 'hidden',
@@ -110,7 +110,7 @@ export class UserProfilePage extends React.Component { // eslint-disable-line re
       this.setState({
         menuOpen: true,
         menuStyles: {
-          position: 'absolute',
+          position: 'fixed',
           height: '100%',
           zIndex: 1300,
           overflow: 'hidden',
@@ -134,7 +134,7 @@ export class UserProfilePage extends React.Component { // eslint-disable-line re
       this.setState({
         menuOpen: false,
         menuStyles: {
-          position: 'absolute',
+          position: 'fixed',
           height: '100%',
           width: 55,
           zIndex: 1300,
@@ -162,7 +162,7 @@ export class UserProfilePage extends React.Component { // eslint-disable-line re
       this.setState({
         menuOpen: true,
         menuStyles: {
-          position: 'absolute',
+          position: 'fixed',
           height: '100%',
           zIndex: 1300,
           overflow: 'hidden',
@@ -173,7 +173,7 @@ export class UserProfilePage extends React.Component { // eslint-disable-line re
       this.setState({
         menuOpen: false,
         menuStyles: {
-          position: 'absolute',
+          position: 'fixed',
           height: '100%',
           width: 0,
           zIndex: 1300,
