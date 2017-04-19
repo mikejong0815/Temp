@@ -319,7 +319,7 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
     let drawerStyle = {};
     if (isMobile.any()) {
       drawerStyle = {
-        position: 'absolute',
+        position: 'fixed',
         height: '45vh',
         top: 'auto',
         bottom: '0',
@@ -384,7 +384,7 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
             onZoomEnd={(map) => (this.zoomChanged(map.getZoom()))}
             center={this.state.mapCenter}
           >
-            <ZoomControl style={{ top: 90, left: 10, right: 'auto' }} />
+            <ZoomControl style={{ top: 90, left: 10, right: 'auto', position: 'fixed' }} />
             <Cluster ClusterMarkerFactory={clusterMarker} clusterThreshold={8} radius={30} >
               {
                 vehicles.map((vehicle, key) => {
