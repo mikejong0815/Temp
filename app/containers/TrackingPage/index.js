@@ -69,7 +69,7 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
         zoomLevel: 0,
         menuOpen: false,
         menuStyles: {
-          position: 'absolute',
+          position: 'fixed',
           height: '100%',
           zIndex: 1300,
           overflow: 'hidden',
@@ -82,7 +82,7 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
         appBarStyle: {
           paddingLeft: 24,
           backgroundColor: '#212121',
-          position: 'absolute',
+          position: 'fixed',
         },
         drawerStyle: {
           position: 'absolute',
@@ -199,7 +199,7 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
       this.setState({
         menuOpen: true,
         menuStyles: {
-          position: 'absolute',
+          position: 'fixed',
           height: '100%',
           zIndex: 1300,
           overflow: 'hidden',
@@ -210,7 +210,7 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
       this.setState({
         menuOpen: false,
         menuStyles: {
-          position: 'absolute',
+          position: 'fixed',
           height: '100%',
           width: 0,
           zIndex: 1300,
