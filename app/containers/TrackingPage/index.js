@@ -90,6 +90,12 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
           marginTop: 'auto',
         },
         mapCenter: this.props.TrackingPage.vehicles[0].coordinates,
+        zoomControlStyles: {
+          top: 90,
+          left: 10,
+          right: 'auto',
+          position: 'fixed',
+        },
       };
     } else {
       this.state = {
@@ -99,7 +105,7 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
         checkpoint: {},
         drawerOpen: false,
         zoomLevel: 0,
-        menuOpen: false,
+        menuOpen: true,
         menuStyles: {
           position: 'absolute',
           height: '100%',
@@ -116,6 +122,12 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
         },
         drawerStyle: {},
         mapCenter: this.props.TrackingPage.vehicles[0].coordinates,
+        zoomControlStyles: {
+          top: 150,
+          left: 264,
+          right: 'auto',
+          position: 'fixed',
+        },
       };
     }
   }
@@ -173,6 +185,12 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
           paddingLeft: 264,
           backgroundColor: '#212121',
         },
+        zoomControlStyles: {
+          top: 150,
+          left: 264,
+          right: 'auto',
+          position: 'fixed',
+        },
       });
     } else {
       this.setState({
@@ -191,6 +209,12 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
         appBarStyle: {
           paddingLeft: 95,
           backgroundColor: '#212121',
+        },
+        zoomControlStyles: {
+          top: 150,
+          left: 70,
+          right: 'auto',
+          position: 'fixed',
         },
       });
     }
@@ -385,7 +409,7 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
             onZoomEnd={(map) => (this.zoomChanged(map.getZoom()))}
             center={this.state.mapCenter}
           >
-            <ZoomControl style={{ top: 90, left: 10, right: 'auto', position: 'fixed' }} />
+            <ZoomControl style={this.state.zoomControlStyles} />
             <Cluster ClusterMarkerFactory={clusterMarker}>
               {
                 vehicles.map((vehicle, key) => {
