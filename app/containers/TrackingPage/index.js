@@ -139,6 +139,7 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
     return { path: [] };
   };
   zoomChanged = (zoom) => {
+    console.log(zoom);
     let zoomLevel = 0;
     if (zoom < 15) {
       zoomLevel = 0;
@@ -380,12 +381,12 @@ export class TrackingPage extends React.Component { // eslint-disable-line react
               height: '100vh',
               width: '100%',
             }}
-            minZoom={13}
+            minZoom={12.6}
             onZoomEnd={(map) => (this.zoomChanged(map.getZoom()))}
             center={this.state.mapCenter}
           >
             <ZoomControl style={{ top: 90, left: 10, right: 'auto', position: 'fixed' }} />
-            <Cluster ClusterMarkerFactory={clusterMarker} clusterThreshold={8} radius={30} >
+            <Cluster ClusterMarkerFactory={clusterMarker}>
               {
                 vehicles.map((vehicle, key) => {
                   const markerStyles = Object.assign({}, styles.marker);
